@@ -596,7 +596,7 @@ compare_means <- function(formula, data, method = "wilcox.test",
   res <- suppressWarnings(do.call(
     test.fun,
     c(
-      list(formula = outcome ~ grp | subject, data = d2),
+      list(formula = outcome ~ grp | as.factor(subject), data = d2),
       test.args
     )
   ))
