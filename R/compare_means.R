@@ -563,7 +563,7 @@ compare_means <- function(formula, data, method = "wilcox.test",
 # yield the statistically correct paired p-value(s). Handles two-group and
 # pairwise (>2 groups) comparisons; ref.group is applied by the caller's
 # post-filter. Returns the same group1 | group2 | p shape as .test_pairwise().
-.paired_test_by_id <- function(data = data, formula = x, group, method, id,
+.paired_test_by_id <- function(data, x, group, method, id,
                                .skip_insufficient_pairs = FALSE, ...) {
   group.values <- .select_vec(data, group)
   groups <- .paired_id_group_names(group.values)
@@ -596,7 +596,7 @@ compare_means <- function(formula, data, method = "wilcox.test",
   res <- suppressWarnings(do.call(
     test.fun,
     c(
-      list(data = d2, formula = outcome ~ grp, paired = TRUE, id = "subject"),
+      list(formula = outcome ~ grp | subject, data = d2),
       test.args
     )
   ))
