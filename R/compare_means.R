@@ -576,7 +576,7 @@ compare_means <- function(formula, data, method = "wilcox.test",
   }
   test.fun <- switch(method,
     t.test = rstatix::t_test,
-    wilcox.test = coin::wilcoxsign_test
+    wilcox.test = rstatix::wilcoxsign_test
   )
   # Run on a small frame with syntactic names so the formula interface handles
   # any original column name (spaces, hyphens, ...). rstatix returns the actual
@@ -596,7 +596,7 @@ compare_means <- function(formula, data, method = "wilcox.test",
   res <- suppressWarnings(do.call(
     test.fun,
     c(
-      list(formula = outcome ~ grp | as.factor(subject), data = d2),
+      list(data = d2, formula = outcome ~ grp, paired = TRUE, id = "subject"),
       test.args
     )
   ))
